@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-
 @NoArgsConstructor
 public class AccountDTO {
     public AccountDTO(int accntId, ActTypes actType, double balance, int user) {

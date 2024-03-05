@@ -1,7 +1,6 @@
 package com.example.project_01.entity;
 
 
-import com.example.project_01.entity.enums.ActTypes;
 import com.example.project_01.entity.enums.LoanTypes;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,5 +17,17 @@ public class Loan {
     private String loanID;
     @Enumerated(EnumType.STRING)
     private LoanTypes loanTypes;
+
+    private double period;
+
+    private double amount;
+
+    private double interest;
+
+    private double amountWithInterest;
+
+    private double remaingAmount;
+
+    private double monthlySettlement;
 
 }

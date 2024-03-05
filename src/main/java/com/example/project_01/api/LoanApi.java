@@ -1,10 +1,8 @@
 package com.example.project_01.api;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.example.project_01.dto.AccountDTO;
+import com.example.project_01.dto.LoanDTO;
+import org.springframework.web.bind.annotation.*;
 
 
 //This endpoint allows basic crud operation for loan
@@ -19,5 +17,10 @@ public class LoanApi {
     public String getAccount(){
         System.out.println("get loan call");
         return "get loan";
+    }
+
+    @PostMapping
+    public void getLoan(@RequestBody LoanDTO dto){
+
     }
 }
