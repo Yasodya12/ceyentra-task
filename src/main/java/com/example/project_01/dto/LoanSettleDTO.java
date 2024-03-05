@@ -1,12 +1,18 @@
 package com.example.project_01.dto;
 
-import com.example.project_01.entity.Loan;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
-
+@Data
+@NoArgsConstructor
 public class LoanSettleDTO {
+    public LoanSettleDTO(String id, double amount, Date date, String loan) {
+        this.id = id;
+        this.amount = amount;
+        this.date = date;
+        this.loan = loan;
+    }
 
     private String id;
 
@@ -16,5 +22,5 @@ public class LoanSettleDTO {
     private Date date;
 
 
-    private int loan;
+    private String loan;
 }
