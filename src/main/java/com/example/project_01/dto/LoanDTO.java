@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class LoanDTO {
     public LoanDTO(String loanID, LoanTypes loanTypes, double period, double amount, double interest,
-                   double amountWithInterest, double remaingAmount, double monthlySettlement)
-    {
+                   double amountWithInterest, double remaingAmount, double monthlySettlement, int account) {
         this.loanID = loanID;
         this.loanTypes = loanTypes;
         this.period = period;
@@ -18,6 +17,7 @@ public class LoanDTO {
         this.amountWithInterest = amountWithInterest;
         this.remaingAmount = remaingAmount;
         this.monthlySettlement = monthlySettlement;
+        this.account = account;
     }
 
     private String loanID;
@@ -35,4 +35,5 @@ public class LoanDTO {
     private double remaingAmount;
 
     private double monthlySettlement;
+    private int account;
 }

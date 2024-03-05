@@ -2,10 +2,7 @@ package com.example.project_01.entity;
 
 
 import com.example.project_01.entity.enums.LoanTypes;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +10,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Loan {
+    public Loan(String loanID, LoanTypes loanTypes, double period, double amount, double interest,
+                double amountWithInterest, double remaingAmount, double monthlySettlement, Account account) {
+        this.loanID = loanID;
+        this.loanTypes = loanTypes;
+        this.period = period;
+        this.amount = amount;
+        this.interest = interest;
+        this.amountWithInterest = amountWithInterest;
+        this.remaingAmount = remaingAmount;
+        this.monthlySettlement = monthlySettlement;
+        this.account = account;
+    }
+
     @Id
     private String loanID;
     @Enumerated(EnumType.STRING)
@@ -29,5 +39,9 @@ public class Loan {
     private double remaingAmount;
 
     private double monthlySettlement;
+
+    @ManyToOne
+    @JoinColumn(name = "act_id")
+    private Account account;
 
 }
