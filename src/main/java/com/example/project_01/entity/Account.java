@@ -9,7 +9,6 @@ import lombok.ToString;
 
 @Entity
 @Data
-
 @NoArgsConstructor
 @ToString
 public class Account {

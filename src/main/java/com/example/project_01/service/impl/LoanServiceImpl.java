@@ -7,6 +7,9 @@ import com.example.project_01.repo.LoanRepo;
 import com.example.project_01.service.LoanService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class LoanServiceImpl implements LoanService {
@@ -40,7 +43,14 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public List<LoanDTO> loanByAct(int id) {
-        return null;
+        List<Loan> byAccountAccntId = loanRepo.findByAccount_AccntId(id);
+        return toDtoList(byAccountAccntId);
+    }
+
+    @Override
+    public List<LoanDTO> loanByUser(int id) {
+        List<Loan> byAccountUserId = loanRepo.findByAccount_User_Id(id);
+        return toDtoList(byAccountUserId);
     }
 
 
@@ -71,5 +81,15 @@ public class LoanServiceImpl implements LoanService {
         String incrementedId = String.format("LN%03d", incrementedValue);
 
         return incrementedId;
+    }
+
+    private List<LoanDTO> toDtoList(List<Loan> loans){
+        ArrayList<LoanDTO> dtoList=new ArrayList();
+        for (Loan loan:loans) {
+            dtoList.add(new LoanDTO(loan.getLoanID(), loan.getLoanTypes(),loan.getPeriod(),loan.getAmount()
+                    ,loan.getInterest(),loan.getAmountWithInterest(),loan.getRemaingAmount()
+                    ,loan.getMonthlySettlement(),loan.getAccount().getAccntId()));
+        }
+        return dtoList;
     }
 }

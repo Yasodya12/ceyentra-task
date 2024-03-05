@@ -7,6 +7,8 @@ import com.example.project_01.util.ResponseMessage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 //This endpoint allows basic crud operation for loan
 
@@ -28,10 +30,21 @@ public class LoanApi {
         return "get loan";
     }
 
+    @GetMapping(path = "/getByActId")
+    public ResponseEntity getLoanBuAct(@RequestParam("id") int id){
+        List<LoanDTO> loanDTOS = loanService.loanByAct(id);
+        return ResponseEntity.ok(loanDTOS);
+    }
+
+
+    @GetMapping(path = "/getByUserId")
+    public ResponseEntity getLoanByUser(@RequestParam("id") int id){
+        List<LoanDTO> loanDTOS = loanService.loanByUser(id);
+        return ResponseEntity.ok(loanDTOS);
+    }
+
     @PostMapping
     public ResponseEntity<ResponseMessage<LoanDTO>> getLoan(@RequestBody LoanDTO dto){
-
-
         LoanDTO loanDTO = loanService.addLoan(dto);
         ResponseMessage<LoanDTO> responseMessage = new ResponseMessage("Loan sucefully issued", loanDTO);
         return ResponseEntity.ok(responseMessage);
