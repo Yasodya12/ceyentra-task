@@ -32,7 +32,7 @@ public class LoanServiceImpl implements LoanService {
         double interest = loanDTO.getAmount() * 10 / 100*loanDTO.getPeriod();
         loanDTO.setInterest(interest);
         double totWithInterest = interest + loanDTO.getAmount();
-
+        loanDTO.setAmountWithInterest(totWithInterest);
         loanDTO.setRemaingAmount(totWithInterest);
 
         double mountyInstament=totWithInterest/(loanDTO.getPeriod()*12);

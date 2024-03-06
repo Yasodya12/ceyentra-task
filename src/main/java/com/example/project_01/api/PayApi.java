@@ -5,6 +5,8 @@ import com.example.project_01.service.SettleLoanService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 //This is the endpoint that we settle the loan
 
@@ -32,8 +34,29 @@ public class PayApi {
 
     @PostMapping
     public ResponseEntity payLoan(@RequestBody LoanSettleDTO loanSettleDTO){
-        System.out.println(loanSettleDTO);
+
         LoanSettleDTO loanSettleDTO1 = settleLoanService.payLoan(loanSettleDTO);
         return ResponseEntity.ok(loanSettleDTO1);
+    }
+
+    @GetMapping(path = "/actID")
+    public ResponseEntity getPayLoanByAct(@RequestParam("id") int id ){
+        List<LoanSettleDTO> loanSettleDTOS = settleLoanService.payLoanByActId(id);
+        return ResponseEntity.ok(loanSettleDTOS);
+
+    }
+
+    @GetMapping("/userID")
+    public ResponseEntity getPayLoanByUserId(@RequestParam("id") int id ){
+        List<LoanSettleDTO> loanSettleDTOS = settleLoanService.payLoanByUserId(id);
+        return ResponseEntity.ok(loanSettleDTOS);
+
+    }
+
+    @GetMapping("/payID")
+    public ResponseEntity searchByPayId(@RequestParam("id") String  id ){
+        LoanSettleDTO loanSettleDTO = settleLoanService.searchByPayId(id);
+        return ResponseEntity.ok(loanSettleDTO);
+
     }
 }
