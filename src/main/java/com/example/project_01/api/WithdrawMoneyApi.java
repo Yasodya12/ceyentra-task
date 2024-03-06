@@ -4,6 +4,7 @@ package com.example.project_01.api;
 import com.example.project_01.dto.DepositeMoneyDTO;
 import com.example.project_01.dto.ErrorRes;
 import com.example.project_01.dto.WithdrawMoneyDTO;
+import com.example.project_01.ex.AccountException;
 import com.example.project_01.ex.InsufficientBalanceExeption;
 import com.example.project_01.service.WithdrawMoneyService;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,8 @@ public class WithdrawMoneyApi {
         }catch (InsufficientBalanceExeption e){
 
             e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        } catch (AccountException e) {
             return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
         }
 

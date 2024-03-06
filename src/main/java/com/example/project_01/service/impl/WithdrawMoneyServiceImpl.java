@@ -5,6 +5,7 @@ import com.example.project_01.dto.WithdrawMoneyDTO;
 import com.example.project_01.entity.Account;
 import com.example.project_01.entity.DepositeMoney;
 import com.example.project_01.entity.WithdrawMoney;
+import com.example.project_01.ex.AccountException;
 import com.example.project_01.ex.InsufficientBalanceExeption;
 import com.example.project_01.repo.AccountRepo;
 import com.example.project_01.repo.WithdrawMoneyRepo;
@@ -30,10 +31,16 @@ public class WithdrawMoneyServiceImpl implements WithdrawMoneyService {
 
 
     @Override
-    public WithdrawMoneyDTO withdrawMoney(WithdrawMoneyDTO withdrawMoneyDTO) throws InsufficientBalanceExeption {
-        if (withdrawMoneyDTO.getWithdrawAmount()> accountRepo.findById(withdrawMoneyDTO.getAccount()).get().getBalance()){
-            throw new InsufficientBalanceExeption("Insufficient Balance to withdraw you ammount");
+    public WithdrawMoneyDTO withdrawMoney(WithdrawMoneyDTO withdrawMoneyDTO) throws InsufficientBalanceExeption, AccountException {
+
+        try {
+            if (withdrawMoneyDTO.getWithdrawAmount()> accountRepo.findById(withdrawMoneyDTO.getAccount()).get().getBalance()){
+                throw new InsufficientBalanceExeption("Insufficient Balance to withdraw you ammount");
+            }
+        }catch (Exception e){
+            throw new AccountException("Invalid Account ID");
         }
+
         Account account = accountRepo.findById(withdrawMoneyDTO.getAccount()).get();
         account.setBalance(account.getBalance()-withdrawMoneyDTO.getWithdrawAmount());
         accountRepo.save(account);
@@ -51,10 +58,16 @@ public class WithdrawMoneyServiceImpl implements WithdrawMoneyService {
         return entiyListToDto(withdrawMoneyRepo.findByAccount_User_Id(id));
     }
 
-    private WithdrawMoney toEnity(WithdrawMoneyDTO withdrawMoneyDTO) {
-        return new WithdrawMoney(incrementId(withdrawMoneyRepo.findFirstByOrderByDateDesc().getWithdrawId()), withdrawMoneyDTO.getWithdrawAmount(),
-                withdrawMoneyDTO.getDate(),
-                accountRepo.findById(withdrawMoneyDTO.getAccount()).get());
+    private WithdrawMoney toEnity(WithdrawMoneyDTO withdrawMoneyDTO) throws AccountException {
+
+        try {
+            return new WithdrawMoney(incrementId(withdrawMoneyRepo.findFirstByOrderByDateDesc().getWithdrawId()), withdrawMoneyDTO.getWithdrawAmount(),
+                    withdrawMoneyDTO.getDate(),
+                    accountRepo.findById(withdrawMoneyDTO.getAccount()).get());
+        }catch (Exception e){
+            throw new AccountException("Invalid Account ID");
+        }
+
 
 
 

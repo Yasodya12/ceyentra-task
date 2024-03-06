@@ -3,10 +3,12 @@ package com.example.project_01.service.impl;
 import com.example.project_01.dto.DepositeMoneyDTO;
 import com.example.project_01.entity.Account;
 import com.example.project_01.entity.DepositeMoney;
+import com.example.project_01.ex.AccountException;
 import com.example.project_01.repo.AccountRepo;
 import com.example.project_01.repo.DepositeMoneyRepo;
 import com.example.project_01.service.DepositeMoneyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.AccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,10 +32,12 @@ public class DepositeMoneyServiceImpl implements DepositeMoneyService {
 
 
     @Override
-    public DepositeMoneyDTO depositeMoney(DepositeMoneyDTO depositeMoneyDTO) {
+    public DepositeMoneyDTO depositeMoney(DepositeMoneyDTO depositeMoneyDTO) throws AccountException {
+        System.out.println("servie eka"+depositeMoneyDTO);
         DepositeMoney save = depositeMoneyRepo.save(toEnity(depositeMoneyDTO));
         Account account = accountRepo.findById(depositeMoneyDTO.getAccount()).get();
         account.setBalance(account.getBalance()+depositeMoneyDTO.getDepositeAmount());
+        accountRepo.save(account);
         return toDTO(save);
     }
 
@@ -49,11 +53,16 @@ public class DepositeMoneyServiceImpl implements DepositeMoneyService {
     }
 
 
-    private DepositeMoney toEnity(DepositeMoneyDTO depositeMoneyDTO){
+    private DepositeMoney toEnity(DepositeMoneyDTO depositeMoneyDTO) throws AccountException {
 
+        try {
+            return new DepositeMoney(incrementId(depositeMoneyRepo.findFirstByOrderByDateDesc().getDepositeID()), depositeMoneyDTO.getDepositeAmount(),
+                    accountRepo.findById(depositeMoneyDTO.getAccount()).get());
 
-        return new DepositeMoney(incrementId(depositeMoneyRepo.findFirstByOrderByDateDesc().getDepositeID()), depositeMoneyDTO.getDepositeAmount(),
-                accountRepo.findById(depositeMoneyDTO.getAccount()).get());
+        }catch (Exception e){
+            throw new AccountException("Invalid Account ID");
+        }
+
     }
 
     private DepositeMoneyDTO toDTO(DepositeMoney depositeMoney){
