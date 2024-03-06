@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserRepo extends CrudRepository<User, Integer> {
      User findAdminByUsername(String username);
      User findUserByEmailAndPassword(String email, String password);
-
+     User findByEmail(String email);
     List<User> findByUsernameLike(String pattern);
 
 }
