@@ -11,7 +11,7 @@ public interface SettleLoanService {
     LoanSettleDTO payLoan(LoanSettleDTO loanSettleDTO) throws LoanSettleExeption;
 
      LoanSettleDTO searchByPayId(String  id) throws LoanSettleExeption;
-    List<LoanSettleDTO> payLoanByActId(int id);
+    List<LoanSettleDTO> payLoanByActId(int id) throws LoanSettleExeption;
 
-    List<LoanSettleDTO> payLoanByUserId(int id);
+    List<LoanSettleDTO> payLoanByUserId(int id) throws LoanSettleExeption;
 }

@@ -50,15 +50,28 @@ public class PayApi {
 
     @GetMapping(path = "/actID")
     public ResponseEntity getPayLoanByAct(@RequestParam("id") int id ){
-        List<LoanSettleDTO> loanSettleDTOS = settleLoanService.payLoanByActId(id);
-        return ResponseEntity.ok(loanSettleDTOS);
+
+        try {
+            List<LoanSettleDTO> loanSettleDTOS = settleLoanService.payLoanByActId(id);
+            return ResponseEntity.ok(loanSettleDTOS);
+        } catch (LoanSettleExeption e) {
+
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        }
+
 
     }
 
     @GetMapping("/userID")
     public ResponseEntity getPayLoanByUserId(@RequestParam("id") int id ){
-        List<LoanSettleDTO> loanSettleDTOS = settleLoanService.payLoanByUserId(id);
-        return ResponseEntity.ok(loanSettleDTOS);
+
+        try {
+            List<LoanSettleDTO> loanSettleDTOS = settleLoanService.payLoanByUserId(id);
+            return ResponseEntity.ok(loanSettleDTOS);
+        } catch (LoanSettleExeption e) {
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        }
+
 
     }
 

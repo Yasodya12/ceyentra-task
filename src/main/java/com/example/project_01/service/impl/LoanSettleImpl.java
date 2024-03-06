@@ -57,14 +57,20 @@ public class LoanSettleImpl implements SettleLoanService {
     }
 
     @Override
-    public List<LoanSettleDTO> payLoanByActId(int id) {
+    public List<LoanSettleDTO> payLoanByActId(int id) throws LoanSettleExeption {
         List<LoanSettle> byLoanAccountAccntId = settleLoanRepo.findByLoan_Account_AccntId(id);
+        if (byLoanAccountAccntId.size()<=0){
+            throw new LoanSettleExeption("No loan settlement happen to account with ID: "+id);
+        }
         return toDtoList(byLoanAccountAccntId);
     }
 
     @Override
-    public List<LoanSettleDTO> payLoanByUserId(int id) {
+    public List<LoanSettleDTO> payLoanByUserId(int id) throws LoanSettleExeption {
         List<LoanSettle> byLoanAccountUserId = settleLoanRepo.findByLoan_Account_UserId(id);
+        if (byLoanAccountUserId.size()<=0){
+            throw new LoanSettleExeption("No loan settlement happen to user with ID: "+id);
+        }
         return toDtoList(byLoanAccountUserId);
     }
 

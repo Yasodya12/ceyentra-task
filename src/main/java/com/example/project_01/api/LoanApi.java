@@ -56,7 +56,7 @@ public class LoanApi {
     @PostMapping
     public ResponseEntity<ResponseMessage<LoanDTO>> getLoan(@RequestBody LoanDTO dto){
         LoanDTO loanDTO = loanService.addLoan(dto);
-        ResponseMessage<LoanDTO> responseMessage = new ResponseMessage("Loan sucefully issued", loanDTO);
+        ResponseMessage<LoanDTO> responseMessage = new ResponseMessage("Loan successfully issued", loanDTO);
         return ResponseEntity.ok(responseMessage);
     }
 }
