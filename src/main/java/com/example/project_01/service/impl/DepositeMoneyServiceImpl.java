@@ -42,14 +42,24 @@ public class DepositeMoneyServiceImpl implements DepositeMoneyService {
     }
 
     @Override
-    public List<DepositeMoneyDTO> getListByActId(int id) {
+    public List<DepositeMoneyDTO> getListByActId(int id) throws AccountException {
 
-        return entiyListToDto( depositeMoneyRepo.findByAccount_AccntId(id));
+        List<DepositeMoneyDTO> depositeMoneyDTOS = entiyListToDto(depositeMoneyRepo.findByAccount_AccntId(id));
+        if (depositeMoneyDTOS.size()<=0){
+            throw new AccountException("There is no deposit happen to account ID: "+id);
+        }
+
+        return depositeMoneyDTOS;
     }
 
     @Override
-    public List<DepositeMoneyDTO> getListByUserId(int id) {
-      return entiyListToDto(depositeMoneyRepo.findByAccount_User_Id(id));
+    public List<DepositeMoneyDTO> getListByUserId(int id) throws AccountException {
+        List<DepositeMoneyDTO> depositeMoneyDTOS = entiyListToDto(depositeMoneyRepo.findByAccount_User_Id(id));
+        if (depositeMoneyDTOS.size()<=0){
+            throw new AccountException("There is no deposit happen to any account with user ID:"+id);
+        }
+
+        return depositeMoneyDTOS;
     }
 
 

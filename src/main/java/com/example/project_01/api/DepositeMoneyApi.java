@@ -39,12 +39,21 @@ public class DepositeMoneyApi {
     @GetMapping(path = "/getByAct")
     public ResponseEntity depositeByActId( @RequestParam("id") int id)  {
 
-        return ResponseEntity.ok( depositeMoneyService.getListByActId(id));
+        try {
+            return ResponseEntity.ok( depositeMoneyService.getListByActId(id));
+        } catch (AccountException e) {
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        }
     }
 
     @GetMapping(path = "/getByUser")
     public ResponseEntity depositeByUserId( @RequestParam("id") int id)  {
 
-        return ResponseEntity.ok( depositeMoneyService.getListByUserId(id));
+        try {
+            return ResponseEntity.ok( depositeMoneyService.getListByUserId(id));
+        } catch (AccountException e) {
+
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        }
     }
 }

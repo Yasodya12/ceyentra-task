@@ -1,9 +1,13 @@
 package com.example.project_01.api;
 
 import com.example.project_01.dto.AccountDTO;
+import com.example.project_01.dto.ErrorRes;
 import com.example.project_01.dto.LoanDTO;
+import com.example.project_01.ex.LoanExeption;
+import com.example.project_01.ex.LoanSettleExeption;
 import com.example.project_01.service.LoanService;
 import com.example.project_01.util.ResponseMessage;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +43,14 @@ public class LoanApi {
 
     @GetMapping(path = "/getByUserId")
     public ResponseEntity getLoanByUser(@RequestParam("id") int id){
-        List<LoanDTO> loanDTOS = loanService.loanByUser(id);
-        return ResponseEntity.ok(loanDTOS);
+
+        try {
+            List<LoanDTO> loanDTOS = loanService.loanByUser(id);
+            return ResponseEntity.ok(loanDTOS);
+        } catch (LoanExeption e) {
+
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        }
     }
 
     @PostMapping

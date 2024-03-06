@@ -49,13 +49,28 @@ public class WithdrawMoneyServiceImpl implements WithdrawMoneyService {
     }
 
     @Override
-    public List<WithdrawMoneyDTO> getListByActId(int id) {
-        return entiyListToDto( withdrawMoneyRepo.findByAccount_AccntId(id));
+    public List<WithdrawMoneyDTO> getListByActId(int id) throws AccountException {
+
+
+        List<WithdrawMoneyDTO> withdrawMoneyDTOS = entiyListToDto(withdrawMoneyRepo.findByAccount_AccntId(id));
+        if (withdrawMoneyDTOS.size()<=0){
+            throw new AccountException("No withdraw happen to Account ID:"+id);
+        }
+
+      return withdrawMoneyDTOS;
+
+
     }
 
     @Override
-    public List<WithdrawMoneyDTO> getListByUserId(int id) {
-        return entiyListToDto(withdrawMoneyRepo.findByAccount_User_Id(id));
+    public List<WithdrawMoneyDTO> getListByUserId(int id) throws AccountException {
+
+        List<WithdrawMoneyDTO> withdrawMoneyDTOS = entiyListToDto(withdrawMoneyRepo.findByAccount_User_Id(id));
+        if (withdrawMoneyDTOS.size()<=0){
+            throw new AccountException("There is no withdraws happen to any account with user ID:"+id);
+        }
+
+        return withdrawMoneyDTOS;
     }
 
     private WithdrawMoney toEnity(WithdrawMoneyDTO withdrawMoneyDTO) throws AccountException {

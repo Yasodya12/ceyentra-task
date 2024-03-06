@@ -10,8 +10,8 @@ public interface DepositeMoneyService {
 
     DepositeMoneyDTO depositeMoney(DepositeMoneyDTO depositeMoneyDTO) throws AccountException;
 
-    List<DepositeMoneyDTO> getListByActId(int id);
+    List<DepositeMoneyDTO> getListByActId(int id) throws AccountException;
 
-    List<DepositeMoneyDTO> getListByUserId(int id);
+    List<DepositeMoneyDTO> getListByUserId(int id) throws AccountException;
 
 }

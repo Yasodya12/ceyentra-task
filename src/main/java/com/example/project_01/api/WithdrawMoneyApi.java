@@ -43,13 +43,23 @@ public class WithdrawMoneyApi {
     @GetMapping(path = "/getByAct")
     public ResponseEntity depositeByActId( @RequestParam("id") int id)  {
 
-        return ResponseEntity.ok( withdrawMoneyService.getListByActId(id));
+
+        try {
+            return ResponseEntity.ok( withdrawMoneyService.getListByActId(id));
+        } catch (AccountException e) {
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        }
+
     }
 
     @GetMapping(path = "/getByUser")
     public ResponseEntity depositeByUserId( @RequestParam("id") int id)  {
 
-        return ResponseEntity.ok( withdrawMoneyService.getListByUserId(id));
+        try {
+            return ResponseEntity.ok( withdrawMoneyService.getListByUserId(id));
+        } catch (AccountException e) {
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        }
     }
 
 

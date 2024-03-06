@@ -2,6 +2,8 @@ package com.example.project_01.service.impl;
 
 import com.example.project_01.dto.LoanDTO;
 import com.example.project_01.entity.Loan;
+import com.example.project_01.ex.LoanExeption;
+import com.example.project_01.ex.LoanSettleExeption;
 import com.example.project_01.repo.AccountRepo;
 import com.example.project_01.repo.LoanRepo;
 import com.example.project_01.service.LoanService;
@@ -48,8 +50,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanDTO> loanByUser(int id) {
+    public List<LoanDTO> loanByUser(int id) throws LoanExeption {
+
         List<Loan> byAccountUserId = loanRepo.findByAccount_User_Id(id);
+        if (byAccountUserId.size()<=0){
+            throw new LoanExeption("No loan settle deaitls in to customer Id with "+id);
+        }
         return toDtoList(byAccountUserId);
     }
 

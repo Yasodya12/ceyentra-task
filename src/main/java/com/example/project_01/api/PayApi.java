@@ -1,7 +1,10 @@
 package com.example.project_01.api;
 
+import com.example.project_01.dto.ErrorRes;
 import com.example.project_01.dto.LoanSettleDTO;
+import com.example.project_01.ex.LoanSettleExeption;
 import com.example.project_01.service.SettleLoanService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +38,14 @@ public class PayApi {
     @PostMapping
     public ResponseEntity payLoan(@RequestBody LoanSettleDTO loanSettleDTO){
 
-        LoanSettleDTO loanSettleDTO1 = settleLoanService.payLoan(loanSettleDTO);
-        return ResponseEntity.ok(loanSettleDTO1);
+
+        try {
+           LoanSettleDTO loanSettleDTO1 = settleLoanService.payLoan(loanSettleDTO);
+            return ResponseEntity.ok(loanSettleDTO1);
+        } catch (LoanSettleExeption e) {
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        }
+
     }
 
     @GetMapping(path = "/actID")
@@ -55,8 +64,15 @@ public class PayApi {
 
     @GetMapping("/payID")
     public ResponseEntity searchByPayId(@RequestParam("id") String  id ){
-        LoanSettleDTO loanSettleDTO = settleLoanService.searchByPayId(id);
-        return ResponseEntity.ok(loanSettleDTO);
+
+        try {
+            LoanSettleDTO  loanSettleDTO = settleLoanService.searchByPayId(id);
+            return ResponseEntity.ok(loanSettleDTO);
+        } catch (LoanSettleExeption e) {
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+
+        }
+
 
     }
 }

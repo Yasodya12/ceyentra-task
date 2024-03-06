@@ -10,7 +10,7 @@ import java.util.List;
 public interface WithdrawMoneyService {
     WithdrawMoneyDTO withdrawMoney(WithdrawMoneyDTO withdrawMoneyDTO) throws InsufficientBalanceExeption, AccountException;
 
-    List<WithdrawMoneyDTO> getListByActId(int id);
+    List<WithdrawMoneyDTO> getListByActId(int id) throws AccountException;
 
-    List<WithdrawMoneyDTO> getListByUserId(int id);
+    List<WithdrawMoneyDTO> getListByUserId(int id) throws AccountException;
 }

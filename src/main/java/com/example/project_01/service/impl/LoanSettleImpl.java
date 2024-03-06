@@ -3,6 +3,7 @@ package com.example.project_01.service.impl;
 import com.example.project_01.dto.LoanSettleDTO;
 import com.example.project_01.entity.Loan;
 import com.example.project_01.entity.LoanSettle;
+import com.example.project_01.ex.LoanSettleExeption;
 import com.example.project_01.repo.LoanRepo;
 import com.example.project_01.repo.SettleLoanRepo;
 import com.example.project_01.service.SettleLoanService;
@@ -25,19 +26,34 @@ public class LoanSettleImpl implements SettleLoanService {
     }
 
     @Override
-    public LoanSettleDTO payLoan(LoanSettleDTO loanSettleDTO) {
+    public LoanSettleDTO payLoan(LoanSettleDTO loanSettleDTO) throws LoanSettleExeption {
+
+        Loan loan = loanRepo.findById(loanSettleDTO.getLoan()).get();
+
+        if (loan.getRemaingAmount()<loanSettleDTO.getAmount()){
+            throw new LoanSettleExeption("Remaining amount is "+loan.getRemaingAmount()+" enter valid amount");
+        }
+
         loanSettleDTO.setId(incrementId(settleLoanRepo.findFirstByOrderByDateDesc().getId()));
         LoanSettle save = settleLoanRepo.save(toEntity(loanSettleDTO));
-        Loan loan = loanRepo.findById(loanSettleDTO.getLoan()).get();
+
+
         loan.setRemaingAmount(loan.getRemaingAmount()-loanSettleDTO.getAmount());
         loanRepo.save(loan);
         return toDTO(save);
     }
 
     @Override
-    public LoanSettleDTO searchByPayId(String id) {
-        LoanSettle loanSettle = settleLoanRepo.findById(id).get();
-       return toDTO(loanSettle);
+    public LoanSettleDTO searchByPayId(String id) throws LoanSettleExeption {
+            try {
+                LoanSettle loanSettle = settleLoanRepo.findById(id).get();
+                return toDTO(loanSettle);
+            }catch (Exception e){
+                throw new LoanSettleExeption("Invalid Pay ID");
+            }
+
+
+
     }
 
     @Override
