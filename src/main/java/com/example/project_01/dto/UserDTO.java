@@ -1,6 +1,7 @@
 package com.example.project_01.dto;
 
 import com.example.project_01.entity.embeded.Address;
+import com.example.project_01.entity.enums.UserTypes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -3,8 +3,10 @@ package com.example.project_01.api;
 
 import com.example.project_01.dto.DepositeMoneyDTO;
 import com.example.project_01.dto.ErrorRes;
+import com.example.project_01.dto.LoanDTO;
 import com.example.project_01.ex.AccountException;
 import com.example.project_01.service.DepositeMoneyService;
+import com.example.project_01.util.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +27,13 @@ public class DepositeMoneyApi {
 
     @PostMapping
     public ResponseEntity depositeMoney(@RequestBody DepositeMoneyDTO dto ){
-            try {
-                DepositeMoneyDTO depositeMoneyDTO = depositeMoneyService.depositeMoney(dto);
-                return ResponseEntity.ok(depositeMoneyDTO);
-            }catch (AccountException e){
-                e.printStackTrace();
-                return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
-            }
+        try {
+            DepositeMoneyDTO depositeMoneyDTO = depositeMoneyService.depositeMoney(dto);
+            return ResponseEntity.ok(depositeMoneyDTO);
+        }catch (AccountException e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new ErrorRes(HttpStatus.BAD_REQUEST,e.getMessage()));
+        }
 
 
     }

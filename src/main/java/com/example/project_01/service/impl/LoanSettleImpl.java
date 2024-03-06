@@ -34,7 +34,8 @@ public class LoanSettleImpl implements SettleLoanService {
             throw new LoanSettleExeption("Remaining amount is "+loan.getRemaingAmount()+" enter valid amount");
         }
 
-        loanSettleDTO.setId(incrementId(settleLoanRepo.findFirstByOrderByDateDesc().getId()));
+//        loanSettleDTO.setId(incrementId(settleLoanRepo.findFirstByOrderByDateDesc().getId()));
+        loanSettleDTO.setId(incrementId("PAY001"));
         LoanSettle save = settleLoanRepo.save(toEntity(loanSettleDTO));
 
 

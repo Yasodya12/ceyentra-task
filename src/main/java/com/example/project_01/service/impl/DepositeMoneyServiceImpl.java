@@ -33,7 +33,7 @@ public class DepositeMoneyServiceImpl implements DepositeMoneyService {
 
     @Override
     public DepositeMoneyDTO depositeMoney(DepositeMoneyDTO depositeMoneyDTO) throws AccountException {
-        System.out.println("servie eka"+depositeMoneyDTO);
+
         DepositeMoney save = depositeMoneyRepo.save(toEnity(depositeMoneyDTO));
         Account account = accountRepo.findById(depositeMoneyDTO.getAccount()).get();
         account.setBalance(account.getBalance()+depositeMoneyDTO.getDepositeAmount());
@@ -66,6 +66,9 @@ public class DepositeMoneyServiceImpl implements DepositeMoneyService {
     private DepositeMoney toEnity(DepositeMoneyDTO depositeMoneyDTO) throws AccountException {
 
         try {
+//            return new DepositeMoney("DPST001", depositeMoneyDTO.getDepositeAmount(),
+//                    accountRepo.findById(depositeMoneyDTO.getAccount()).get());
+
             return new DepositeMoney(incrementId(depositeMoneyRepo.findFirstByOrderByDateDesc().getDepositeID()), depositeMoneyDTO.getDepositeAmount(),
                     accountRepo.findById(depositeMoneyDTO.getAccount()).get());
 

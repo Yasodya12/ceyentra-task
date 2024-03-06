@@ -3,6 +3,7 @@ package com.example.project_01.service.impl;
 import com.example.project_01.dto.UserDTO;
 import com.example.project_01.entity.Account;
 import com.example.project_01.entity.User;
+import com.example.project_01.entity.enums.UserTypes;
 import com.example.project_01.ex.UserNotFoundException;
 import com.example.project_01.repo.UserRepo;
 import com.example.project_01.service.UserService;
@@ -39,9 +40,9 @@ public class UserServiceImpl implements UserService {
         try {
             User adminByUsername = repo.findAdminByUsername(username);
             if (adminByUsername != null) {
-                List<String > list = gson.fromJson(adminByUsername.getType(), new TypeToken<ArrayList<String>>() {
+                List<String> list = gson.fromJson(adminByUsername.getType(), new TypeToken<ArrayList<String>>() {
                 }.getType());
-                String[] objects = (String[])list.toArray();
+                String[] objects = (String [])list.toArray();
                 return org.springframework.security.core.userdetails.User.builder().username(
                         adminByUsername.getUsername()
                 ).password(adminByUsername.getPassword()).roles(objects).build();

@@ -31,6 +31,7 @@ public class LoanServiceImpl implements LoanService {
     public LoanDTO addLoan(LoanDTO loanDTO) {
 
         loanDTO.setLoanID(incrementId(loanRepo.findFirstByOrderByLoanIDDesc().getLoanID()));
+
         double interest = loanDTO.getAmount() * 10 / 100*loanDTO.getPeriod();
         loanDTO.setInterest(interest);
         double totWithInterest = interest + loanDTO.getAmount();
@@ -61,6 +62,8 @@ public class LoanServiceImpl implements LoanService {
 
 
     private Loan toEntity(LoanDTO loanDTO){
+
+
 
 
 

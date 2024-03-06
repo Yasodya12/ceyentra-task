@@ -1,9 +1,9 @@
 package com.example.project_01.entity;
 
 import com.example.project_01.entity.embeded.Address;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.example.project_01.entity.enums.LoanTypes;
+import com.example.project_01.entity.enums.UserTypes;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +36,9 @@ public class User {
     private String nic;
     private Date dateofBirth;
     private String telNo;
+
+
     private String type;
+
 
 }

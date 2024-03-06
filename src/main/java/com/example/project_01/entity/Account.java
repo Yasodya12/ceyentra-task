@@ -26,7 +26,7 @@ public class Account {
     private double balance;
 
 //    ,referencedColumnName = "id",insertable = false,updatable = false,nullable = false
-    @ManyToOne
+@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
